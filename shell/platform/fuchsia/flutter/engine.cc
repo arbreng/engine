@@ -141,7 +141,7 @@ Engine::Engine(Delegate& delegate,
        max_frames_in_flight = product_config.get_max_frames_in_flight(),
        &view_embedder_latch,
        vsync_offset = product_config.get_vsync_offset()]() mutable {
-        session_connection_ = std::make_shared<DefaultSessionConnection>(
+        session_connection_ = std::make_shared<GfxSessionConnection>(
             thread_label_, std::move(session),
             std::move(session_error_callback), [](auto) {},
             max_frames_in_flight, vsync_offset);
@@ -340,7 +340,7 @@ Engine::Engine(Delegate& delegate,
                 std::move(on_semantics_node_update_callback),
                 std::move(on_request_announce_callback),
                 std::move(on_shader_warmup), external_view_embedder,
-                // Callbacks for VsyncWaiter to call into SessionConnection.
+                // Callbacks for VsyncWaiter to call into GfxSessionConnection.
                 await_vsync_callback,
                 await_vsync_for_secondary_callback_callback);
           });
